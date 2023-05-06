@@ -1,13 +1,14 @@
 import 'package:book_app/bloc/book_bloc.dart';
-import 'package:book_app/models/Book_model.dart';
+import 'package:book_app/models/banner_model.dart';
 import 'package:book_app/utils/app_style.dart';
 import 'package:book_app/utils/size_config.dart';
-import 'package:book_app/utils/util.dart';
 import 'package:book_app/widget/item_home.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
+import '../widget/widget_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,17 +19,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int current = 0;
+  final controller = CarouselController();
+  var _selectedIndex = 0;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<BookBloc>(context).add(FetchListBook());
   }
+
+  // void _runFilter(String enterkey){
+  //   List<BookModel> list = [];
+  //   if(enterkey.isEmpty){
+  //       list =
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body:ListView(
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
@@ -39,42 +50,49 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Hello,welcome',
-                    style: kEncodeSansRagular.copyWith(
-                      color: kDarkGrey,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 3.5
-                    ),),
-
-                    Text('Lê Đức Bảo',
+                    Text(
+                      'Hello,welcome',
+                      style: kEncodeSansRagular.copyWith(
+                          color: kDarkGrey,
+                          fontSize: SizeConfig.blockSizeHorizontal! * 3.5),
+                    ),
+                    Text(
+                      'Lê Đức Bảo',
                       style: kEncodeSansBold.copyWith(
                           color: kDarkGrey,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 4
-                      ),)
+                          fontSize: SizeConfig.blockSizeHorizontal! * 4),
+                    )
                   ],
                 ),
                 const CircleAvatar(
                   radius: 20,
                   backgroundColor: kGrey,
-                  backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv8lgDc1gGlVqn3UjDqKslOP6HrrUissH8xw&usqp=CAU'),
+                  backgroundImage: NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv8lgDc1gGlVqn3UjDqKslOP6HrrUissH8xw&usqp=CAU'),
                 )
               ],
             ),
           ),
-          const SizedBox(height: 24,),
+          const SizedBox(
+            height: 24,
+          ),
+          const IndicatorWidget(),
+
+          const SizedBox(height: 10,),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: kPaddingHorizontal
-            ),
-            child: Row(children: [
-              Expanded(
-                  child: TextField(
-                    style: kEncodeSansRagular.copyWith(
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
+            child: Row(
+              children: [
+                Expanded(
+                    child: TextField(
+                  // onChanged: (value) => ,
+                  style: kEncodeSansRagular.copyWith(
                       color: kDarkGrey,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 3.5
-                    ),
-                    controller:  TextEditingController(),
-                    decoration:  InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 13),
+                      fontSize: SizeConfig.blockSizeHorizontal! * 3.5),
+                  controller: TextEditingController(),
+                  decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 13),
                       prefixIcon: const IconTheme(
                         data: IconThemeData(
                           color: kDarkGrey,
@@ -82,154 +100,170 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Icon(Icons.search),
                       ),
                       hintText: 'Search book...',
-                      border:kInputBoder,
+                      border: kInputBoder,
                       errorBorder: kInputBoder,
-                      disabledBorder:  kInputBoder,
+                      disabledBorder: kInputBoder,
                       focusedBorder: kInputBoder,
                       focusedErrorBorder: kInputBoder,
                       enabledBorder: kInputBoder,
                       hintStyle: kEncodeSansRagular.copyWith(
-                        color: kDarkGrey,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 3.5
-                      )
-                    ),
-                  )
-              ),
-             const SizedBox( width: 16,),
-              Container(
-                height: 49,
-                width: 49,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(KBoderRadius,),
-                  color: Colors.black
+                          color: kDarkGrey,
+                          fontSize: SizeConfig.blockSizeHorizontal! * 3.5)),
+                )),
+                const SizedBox(
+                  width: 16,
                 ),
-                child: Image.asset('images/setting.png',color: Colors.white),
-              )
-            ],),
-          ),
-         const SizedBox(height: 24,),
-          SizedBox(
-            height: 36,
-            width: double.infinity,
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: Util.categories.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: Container(
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: current == index ? kBrown : Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: current == index ? null : Border.all(color: kGrey,width: 1)
+                Container(
+                  height: 49,
+                  width: 49,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        KBoderRadius,
                       ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(current == index? 'images/${Util.Icons[index]}-com.svg':toString()),
-                        const SizedBox(width: 4,),
-                        Text(Util.categories[index],style: kEncodeSansMedium.copyWith(
-                          color: current == index?
-                              Colors.white : kDrakBrown,
-                          fontSize: SizeConfig.blockSizeHorizontal! * 3
-                        ),)
-                      ],
-                    ),
-                  ),
-                );
-              },
+                      color: Colors.black),
+                  child: Image.asset('images/setting.png', color: Colors.white),
+                )
+              ],
             ),
           ),
-          const  SizedBox(height: 32,),
-          BlocBuilder<BookBloc,BookState>(
+
+          Column(
+            children: [
+              const SizedBox(height: 10,),
+              SizedBox(
+                  height: 200,
+                  child: LottieBuilder.network(
+                      'https://assets10.lottiefiles.com/packages/lf20_fxvz0c.json')),
+              const SizedBox(height: 10,),
+              const Divider(thickness: 1,),
+
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                height: 160,
+                child: PageView.builder(
+                    onPageChanged: (value) {
+                      setState(() {
+                        _selectedIndex = value;
+                      });
+                    },
+                    controller: PageController(viewportFraction: 0.7),
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      var banner = list[index];
+                      var _scale = _selectedIndex == index ? 1.0 : 0.8;
+                      return TweenAnimationBuilder(
+                        duration: const Duration(milliseconds: 350),
+                        tween: Tween(begin: _scale, end: _scale),
+                        builder: (context, value, child) {
+                          return Transform.scale(
+                            scale: value,
+                            child: child,
+                          );
+                        },
+                        curve: Curves.ease,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: NetworkImage(list[index].thumbnailUrl),
+                                  fit: BoxFit.cover)),
+                          child: DefaultTextStyle(
+                            style:
+                                const TextStyle(color: Colors.white, fontSize: 20.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromRGBO(0, 0, 0, 0.3),
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                Center(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text('Chủ đề'.toUpperCase()),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: Text(
+                                          list[index].title.toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          const Divider(thickness: 1,),
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
+              child: Text('Tất cả sách',style: TextStyle(fontSize: 20,fontWeight: FontWeight.normal),)),
+            const Divider(thickness: 1,),
+          const SizedBox(
+            height: 32,
+          ),
+          BlocBuilder<BookBloc, BookState>(
             builder: (context, state) {
-              if(state is BookLoading){
+              if (state is BookLoading) {
                 return Container(
                   alignment: Alignment.center,
                   child: const CircularProgressIndicator(),
                 );
-              }if(state is BookLoadSuccess){
-                return  MasonryGridView.count(
+              }
+              if (state is BookLoadSuccess) {
+                return MasonryGridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   crossAxisSpacing: 70,
                   mainAxisSpacing: 30,
                   itemCount: state.listBook.length,
-                  padding:const EdgeInsets.symmetric(
-                    horizontal: kPaddingHorizontal
-                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kPaddingHorizontal),
                   itemBuilder: (context, index) {
-                     return ItemHomeWidget(listBook: state.listBook, index: index);
+                    return ItemHomeWidget(
+                        listBook: state.listBook, index: index);
                   },
-
                 );
               }
               return Container();
             },
           )
-
         ],
-      )
+      ),
     );
   }
 }
 
-
-// Column(
-// children: [
-// const Text('Home screen'),
-// BlocBuilder<BookBloc,BookState>(
-// builder: (context, state) {
-// if(state is BookLoading){
-// return const Center(child: CircularProgressIndicator(),);
-// }if( state is BookLoadSuccess){
-// print(state.listBook.length);
-// return Expanded(
-// child:  ListView.builder(
-// itemCount: state.listBook.length,
-// itemBuilder:(context, index) =>  _ItemHome(state.listBook,index,context),));
-// }
-// return Container();
-// }, )
+// class Inicator extends StatelessWidget {
+//   final bool isActive;
 //
-// ],
-// ),
-
-// Widget _ItemHome(List<BookModel> listBook, int index, BuildContext context) {
-//   return GridView.builder(
-//     physics: const BouncingScrollPhysics(),
-//     itemCount: 4,
-//     shrinkWrap: true,
-//     itemBuilder: (context, index) {
-//       return Container(
-//         // color: Colors.amber,
-//         child: Row(
-//           children: [
-//             Image.network(listBook[index].imgae.toString(),
-//                 width: 50, height: 50,),
-//             const SizedBox(
-//               width: 14,
-//             ),
-//             Expanded(
-//               child: SizedBox(
-//                 width: 110,
-//                 child: Text(
-//                   listBook[index].name.toString(),
-//                   maxLines: 2,
-//                   overflow: TextOverflow.ellipsis,
-//                   // style: CustomText.title(15, colorLabalTextFiled),
-//                 ),
-//               ),
-//             )
-//           ],
-//         ),
-//       );
-//     },
-//     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//         childAspectRatio: 2.4,
-//         crossAxisSpacing: 14,
-//         mainAxisSpacing: 0.75,
-//         crossAxisCount: 2),
-//   );
+//   const Inicator({Key? key, required this.isActive}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedContainer(
+//       duration: const Duration(milliseconds: 350),
+//       child: Container(
+//         width: isActive ? 22.0 : 8.0,
+//         height: 8.0,
+//         decoration: BoxDecoration(
+//             color: isActive ? Colors.orange : Colors.grey,
+//             borderRadius: BorderRadius.circular(8.0)),
+//       ),
+//     );
+//   }
 // }

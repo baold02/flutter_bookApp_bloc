@@ -16,6 +16,17 @@ class BookLoading extends BookState{
 
 }
 
+class BookSearch extends BookState{
+  final List<BookModel> listSearch;
+
+  const BookSearch(this.listSearch);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [listSearch];
+
+}
+
 class BookLoadSuccess extends BookState{
   final List<BookModel> listBook;
   const BookLoadSuccess(this.listBook);

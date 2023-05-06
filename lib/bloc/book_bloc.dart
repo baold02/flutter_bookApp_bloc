@@ -5,14 +5,14 @@ import 'package:book_app/models/Book_model.dart';
 import 'package:book_app/services/api_reponsitory.dart';
 import 'package:equatable/equatable.dart';
 
-import '../services/book_api.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
   final ApiReponsitory _reponsitory = ApiReponsitory();
-  final BookApi _apiBook = BookApi();
+  List<BookModel> list = [];
+  // final BookApi _apiBook = BookApi();
   BookBloc() : super(BookInitial()) {
     on<FetchListBook>((event, emit) async {
       try{
@@ -23,6 +23,10 @@ class BookBloc extends Bloc<BookEvent, BookState> {
         emit(const BookError("Error"));
       }
       // TODO: implement event handler
+    });
+
+    on<SearchListBook>((event, emit) {
+
     });
   }
 }

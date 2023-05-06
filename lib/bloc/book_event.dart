@@ -11,3 +11,12 @@ class FetchListBook extends BookEvent{
   List<Object?> get props => throw UnimplementedError();
 
 }
+
+class SearchListBook extends BookEvent{
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+}
+
+

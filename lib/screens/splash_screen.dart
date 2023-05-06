@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:book_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'navigator_tab.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer.periodic(const Duration(seconds: 2), (timer) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const NavivatorTabCustom(),
+
       ));
     });
   }

@@ -11,8 +11,8 @@ class Util{
   ];
 
   static List<String> Icons = [
-    "filter-circle-svgrepo",
     "book-opened-svgrepo",
+    "",
     "book-square-svgrepo",
     ""
   ];
