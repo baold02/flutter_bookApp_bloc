@@ -6,7 +6,6 @@ import 'package:http/http.dart';
 
 class BookApi{
  var url = Uri.parse('https://645465f2c18adbbdfeb562e0.mockapi.io/api/book');
-
  Future<List<BookModel>> fetchListBook() async{
    Response response = await http.get(url);
   if(response.statusCode == 200){

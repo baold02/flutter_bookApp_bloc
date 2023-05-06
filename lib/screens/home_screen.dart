@@ -1,5 +1,6 @@
 import 'package:book_app/bloc/book_bloc.dart';
 import 'package:book_app/models/banner_model.dart';
+import 'package:book_app/screens/search_screen.dart';
 import 'package:book_app/utils/app_style.dart';
 import 'package:book_app/utils/size_config.dart';
 import 'package:book_app/widget/item_home.dart';
@@ -85,6 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                     child: TextField(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
+                      },
                   // onChanged: (value) => ,
                   style: kEncodeSansRagular.copyWith(
                       color: kDarkGrey,

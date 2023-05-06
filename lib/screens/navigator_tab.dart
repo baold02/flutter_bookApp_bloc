@@ -17,7 +17,7 @@ class NavivatorTabCustom extends StatefulWidget {
 
 class _NavivatorTabCustomState extends State<NavivatorTabCustom> {
   int _currentIndex = 0;
-  List tab = [const HomeScreen(), const CartScreen(), const FavoriteScreen(),const SearchScreen(),const MeScreen()];
+  List tab = [const HomeScreen(), const CartScreen(), const FavoriteScreen(), HomePage(),const MeScreen()];
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
