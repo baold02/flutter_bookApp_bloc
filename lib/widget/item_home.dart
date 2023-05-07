@@ -18,7 +18,7 @@ class _ItemHomeWidgetState extends State<ItemHomeWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBook(image: widget.listBook[widget.index].imgae.toString(), name: widget.listBook[widget.index].name.toString(),description: widget.listBook[widget.index].description.toString()),));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailBook(image: widget.listBook[widget.index].imgae.toString(), name: widget.listBook[widget.index].name.toString(),description: widget.listBook[widget.index].description.toString(),price: widget.listBook[widget.index].price.toString()),));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

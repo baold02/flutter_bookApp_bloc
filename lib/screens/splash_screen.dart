@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:book_app/screens/home_screen.dart';
+import 'package:book_app/screens/login/login_screen.dart';
+import 'package:book_app/screens/login/sigin_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'navigator_tab.dart';
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image:  AssetImage('images/boook.jpg'),
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         )
 
       ),
