@@ -41,7 +41,7 @@ class OderBookLoaded extends OrderState{
 class BookOdrerLoadError extends OrderState{
   final String LoadBookError;
 
-  BookOdrerLoadError(this.LoadBookError);
+  const BookOdrerLoadError(this.LoadBookError);
 
   @override
   // TODO: implement props

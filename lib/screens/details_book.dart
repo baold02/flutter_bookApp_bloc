@@ -1,4 +1,5 @@
 import 'package:book_app/bloc/counter/counter.dart';
+import 'package:book_app/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:book_app/bloc/oder_bloc/order_bloc.dart';
 import 'package:book_app/models/Book_model.dart';
 import 'package:book_app/utils/app_style.dart';
@@ -91,23 +92,28 @@ class _DetailBookState extends State<DetailBook> {
                               ),
                             ),
 
-                            Container(
-                              height: SizeConfig.blockSizdeVetical!*4,
-                              width: SizeConfig.blockSizdeVetical!*4,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: kBrown.withOpacity(0.11),
-                                        spreadRadius: 0.0,
-                                        blurRadius: 12,
-                                        offset: const Offset(0,5)
-                                    )
-                                  ]
+                            InkWell(
+                              onTap: () {
+                                BlocProvider.of<FavoriteBloc>(context).add(AddFavoriteEvent(widget.name,widget.image, widget.price, widget.athur));
+                              },
+                              child: Container(
+                                height: SizeConfig.blockSizdeVetical!*4,
+                                width: SizeConfig.blockSizdeVetical!*4,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: kBrown.withOpacity(0.11),
+                                          spreadRadius: 0.0,
+                                          blurRadius: 12,
+                                          offset: const Offset(0,5)
+                                      )
+                                    ]
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                child:const Icon(Icons.favorite_border),
                               ),
-                              padding: const EdgeInsets.all(8),
-                              child:const Icon(Icons.favorite_border),
                             )
                           ],
                         ),
@@ -143,7 +149,7 @@ class _DetailBookState extends State<DetailBook> {
                             shape: BoxShape.circle,
                             color: Colors.white
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.remove,
                             color: Colors.grey,
                           ),

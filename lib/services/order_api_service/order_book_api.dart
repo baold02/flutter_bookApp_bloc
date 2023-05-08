@@ -18,7 +18,7 @@ class OrderBookApi {
     }
   }
 
-  Future<http.Response> addOrderBook(String idBook,String name,String image,String price,String des,int quan,
+  Future<http.Response> addOrderBook(String idBook,String name,String image,String price,String des,int  quan,
       String  athur) async {
     final bodyData = {
       "idBook": idBook,
@@ -38,7 +38,7 @@ class OrderBookApi {
   Future deleteDta(var id) async{
     var url = Uri.parse(
         'https://645866ae0c15cb14821d0408.mockapi.io/api/bookOrder');
-    // print('delete');
+      // print('delete');
     final  respone = await http.delete(Uri.parse("${url}/$id"));
     if(respone.statusCode == 200){
       print('ok');
