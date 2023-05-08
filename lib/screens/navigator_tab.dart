@@ -1,9 +1,12 @@
+import 'package:book_app/bloc/book_bloc.dart';
+import 'package:book_app/bloc/oder_bloc/order_bloc.dart';
 import 'package:book_app/screens/favorite_screen.dart';
 import 'package:book_app/screens/home_screen.dart';
 import 'package:book_app/screens/search_screen.dart';
 import 'package:book_app/utils/app_style.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'card_screen.dart';
 import 'me_screen.dart';
@@ -18,6 +21,13 @@ class NavivatorTabCustom extends StatefulWidget {
 class _NavivatorTabCustomState extends State<NavivatorTabCustom> {
   int _currentIndex = 0;
   List tab = [const HomeScreen(), const CartScreen(), const FavoriteScreen(), HomePage(),const MeScreen()];
+  @override
+  void initState() {
+    // TODO: implement initState
+   BlocProvider.of<BookBloc>(context).add(FetchListBook());
+  BlocProvider.of<OrderBloc>(context).add(FetchListOrder());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

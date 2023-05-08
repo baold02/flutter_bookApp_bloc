@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                   alignment: Alignment.centerRight,
-                  child: InkWell(
+                  child: const InkWell(
                     // onTap: () {
                     //   showDialog(
                     //     context: context,
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //     },
                     //   );
                     // },
-                    child: const Text(
+                    child: Text(
                       'Quên mật khẩu?',
                       style: TextStyle(color: Colors.blue),
                     ),
@@ -274,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         listener: (context, state) {
                           if(state is LoginState){
                             if(state.res.statusCode == 200){
-                                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen(),));
                             }else{
                               print('error');
                             }

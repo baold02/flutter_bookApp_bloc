@@ -1,17 +1,22 @@
 import 'package:book_app/bloc/counter/counter.dart';
+import 'package:book_app/bloc/oder_bloc/order_bloc.dart';
 import 'package:book_app/models/Book_model.dart';
 import 'package:book_app/utils/app_style.dart';
 import 'package:book_app/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:readmore/readmore.dart';
 
 class DetailBook extends StatefulWidget {
+  final String idBook;
+  final String rate;
+  final String athur;
   final String name;
   final String description;
   final String image;
   final String price;
-  const DetailBook({Key? key, required this.name, required this.description, required this.image, required this.price }) : super(key: key);
+  const DetailBook({Key? key, required this.name, required this.description, required this.image, required this.price, required this.athur, required this.rate, required this.idBook }) : super(key: key);
 
   @override
   State<DetailBook> createState() => _DetailBookState();
@@ -31,6 +36,7 @@ class _DetailBookState extends State<DetailBook> {
       _counter.decrement();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,29 +258,38 @@ class _DetailBookState extends State<DetailBook> {
           borderRadius: BorderRadius.circular(40),
           color: Colors.black
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.add_shopping_cart,color: Colors.white,),
-            SizedBox(width: SizeConfig.blockSizeHorizontal!*1,),
-            RichText(text: TextSpan(
-                text: 'Add to cart|',
-                style: kEncodeSansRagular.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.blockSizeHorizontal!*3
-                ),
-                children: [
-                  TextSpan(
-                      text: widget.price,
-                      style: kEncodeSansRagular.copyWith(
-                          color: Colors.white,
-                          fontSize: SizeConfig.blockSizeHorizontal!*3
-                      )
-                  )
-                ]
-            ))
-          ],
+        child: InkWell(
+          onTap: () {
+            BlocProvider.of<OrderBloc>(context).add(OrderBookEvent(widget.idBook,widget.name, widget.image, widget.price, widget.description,widget.athur,widget.rate,1));
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Đã thêm vào giỏ hàng"),
+                    duration: Duration(milliseconds: 500),
+                  ));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.add_shopping_cart,color: Colors.white,),
+              SizedBox(width: SizeConfig.blockSizeHorizontal!*1,),
+              RichText(text: TextSpan(
+                  text: 'Add to cart|',
+                  style: kEncodeSansRagular.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.blockSizeHorizontal!*3
+                  ),
+                  children: [
+                    TextSpan(
+                        text: widget.price,
+                        style: kEncodeSansRagular.copyWith(
+                            color: Colors.white,
+                            fontSize: SizeConfig.blockSizeHorizontal!*3
+                        )
+                    )
+                  ]
+              ))
+            ],
+          ),
         ),
       ),
     );

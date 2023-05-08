@@ -27,15 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<BookBloc>(context).add(FetchListBook());
   }
 
-  // void _runFilter(String enterkey){
-  //   List<BookModel> list = [];
-  //   if(enterkey.isEmpty){
-  //       list =
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -78,17 +71,22 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 24,
           ),
           const IndicatorWidget(),
-
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
             child: Row(
               children: [
                 Expanded(
                     child: TextField(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
-                      },
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ));
+                  },
                   // onChanged: (value) => ,
                   style: kEncodeSansRagular.copyWith(
                       color: kDarkGrey,
@@ -131,17 +129,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
           Column(
             children: [
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               SizedBox(
                   height: 200,
                   child: LottieBuilder.network(
                       'https://assets10.lottiefiles.com/packages/lf20_fxvz0c.json')),
-              const SizedBox(height: 10,),
-              const Divider(thickness: 1,),
-
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(
+                thickness: 1,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 16.0),
                 height: 160,
@@ -174,8 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   image: NetworkImage(list[index].thumbnailUrl),
                                   fit: BoxFit.cover)),
                           child: DefaultTextStyle(
-                            style:
-                                const TextStyle(color: Colors.white, fontSize: 20.0),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20.0),
                             child: Stack(
                               children: [
                                 Container(
@@ -211,11 +213,18 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 24,
           ),
-          const Divider(thickness: 1,),
+          const Divider(
+            thickness: 1,
+          ),
           const Padding(
               padding: EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
-              child: Text('Tất cả sách',style: TextStyle(fontSize: 20,fontWeight: FontWeight.normal),)),
-            const Divider(thickness: 1,),
+              child: Text(
+                'Tất cả sách',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+              )),
+          const Divider(
+            thickness: 1,
+          ),
           const SizedBox(
             height: 32,
           ),
